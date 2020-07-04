@@ -9,16 +9,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.swetajain.headandtails.R;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class BodyPartFragment extends Fragment {
 
     // Tag for logging
     private static final String TAG = "BodyPartFragment";
+    public static final String IMAGE_ID_LIST = "image_ids";
+    public static final String LIST_INDEX = "list_index";
 
     // Variables to store a list of image resources and the index of the image that this fragment displays
     private List<Integer> mImageIds;
@@ -34,13 +40,19 @@ public class BodyPartFragment extends Fragment {
      * Inflates the fragment layout file and sets the correct resource for the image to display
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        //load the saved state
+        if (savedInstanceState != null) {
+            mImageIds = savedInstanceState.getIntegerArrayList(IMAGE_ID_LIST);
+            mListIndex = savedInstanceState.getInt(LIST_INDEX);
+        }
 
         // Inflate the Android-Me fragment layout
         View rootView = inflater.inflate(R.layout.fragment_body_part, container, false);
 
         // Get a reference to the ImageView in the fragment layout
-        final ImageView imageView = (ImageView) rootView.findViewById(R.id.body_part_image_view);
+        final ImageView imageView = rootView.findViewById(R.id.body_part_image_view);
 
         // If a list of image ids exists, set the image resource to the correct item in that list
         // Otherwise, create a Log statement that indicates that the list was not found
@@ -67,6 +79,13 @@ public class BodyPartFragment extends Fragment {
 
         // Return the rootView
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putIntegerArrayList(IMAGE_ID_LIST, (ArrayList<Integer>) mImageIds);
+        outState.putInt(LIST_INDEX, mListIndex);
     }
 
     // Setter methods for keeping track of the list images this fragment can display and which image

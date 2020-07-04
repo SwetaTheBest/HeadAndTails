@@ -12,27 +12,29 @@ class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val headFragment = BodyPartFragment()
-        headFragment.setImageIds(AndroidImageAssets.heads)
-        val fragmentManager: FragmentManager = supportFragmentManager
-        fragmentManager.beginTransaction()
-            .add(R.id.head_container, headFragment)
-            .commit()
+        if (savedInstanceState == null) {
+            val headFragment = BodyPartFragment()
+            headFragment.setImageIds(AndroidImageAssets.getHeads())
+            val fragmentManager: FragmentManager = supportFragmentManager
+            fragmentManager.beginTransaction()
+                .add(R.id.head_container, headFragment)
+                .commit()
 
-        //create and display head and leg fragments
+            //create and display head and leg fragments
 
-        val bodyFragment = BodyPartFragment()
-        bodyFragment.setImageIds(AndroidImageAssets.bodies)
-        fragmentManager.beginTransaction()
-            .add(R.id.body_container, bodyFragment)
-            .commit()
+            val bodyFragment = BodyPartFragment()
+            bodyFragment.setImageIds(AndroidImageAssets.getBodies())
+            fragmentManager.beginTransaction()
+                .add(R.id.body_container, bodyFragment)
+                .commit()
 
-        val legFragment = BodyPartFragment()
-        legFragment.setImageIds(AndroidImageAssets.legs)
-        fragmentManager.beginTransaction()
-            .add(R.id.leg_container, legFragment)
-            .commit()
+            val legFragment = BodyPartFragment()
+            legFragment.setImageIds(AndroidImageAssets.getLegs())
+            fragmentManager.beginTransaction()
+                .add(R.id.leg_container, legFragment)
+                .commit()
 
 
+        }
     }
 }
