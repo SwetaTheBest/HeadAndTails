@@ -15,6 +15,8 @@ class MainActivity : FragmentActivity() {
         if (savedInstanceState == null) {
             val headFragment = BodyPartFragment()
             headFragment.setImageIds(AndroidImageAssets.getHeads())
+            headFragment.setListIndex(1)
+
             val fragmentManager: FragmentManager = supportFragmentManager
             fragmentManager.beginTransaction()
                 .add(R.id.head_container, headFragment)
